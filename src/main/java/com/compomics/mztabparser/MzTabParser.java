@@ -19,7 +19,7 @@ public class MzTabParser {
     private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger(MzTabParser.class);
 
     /**
-     * The child directory of the input directory that contains the MGF files.
+     * The child directory of the input directory that contains the mzTab files.
      */
     private static final String CHILD_DIRECTORY = "submitted";
     private static final String SEPARATOR = "\t";
@@ -33,7 +33,7 @@ public class MzTabParser {
     }
 
     /**
-     * Parse the MGF files in the input directory and write them to the output
+     * Parse the mzTab files in the input directory and write them to the output
      * directory.
      *
      * @param inputDirectory the input directory

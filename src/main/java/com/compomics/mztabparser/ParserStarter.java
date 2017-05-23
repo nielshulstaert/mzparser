@@ -66,16 +66,17 @@ public class ParserStarter {
     }
 
     /**
-     * Parse the mzTab files in the given input directory and write the output
-     * file to the output directory.
+     * Parse the mzTab files in the input directory, merge them with the moff
+     * result files in the output directory and write the resulting mzTab file
+     * to the output directory.
      *
      * @param inputDirectory the input directory
      * @param outputDirectory the output directory
      */
-    public static void parseMzTabFiles(Path inputDirectory, Path outputDirectory) {
-        MzTabParser mzTabParser = new MzTabParser();
+    public static void parseAndMergeMzTabFiles(Path inputDirectory, Path outputDirectory) {
+        MzTabMerger mzTabMerger = new MzTabMerger();
         try {
-            mzTabParser.parse(inputDirectory, outputDirectory);
+            mzTabMerger.parseAndMerge(inputDirectory, outputDirectory);
         } catch (IOException | IllegalArgumentException ex) {
             LOGGER.error(ex.getMessage());
             System.exit(1);
@@ -129,7 +130,7 @@ public class ParserStarter {
             if (commandLine.hasOption('m')) {
                 parseMgfFiles(inputDirectory, outputDirectory);
             } else if (commandLine.hasOption('z')) {
-                parseMzTabFiles(inputDirectory, outputDirectory);
+                parseAndMergeMzTabFiles(inputDirectory, outputDirectory);
             } else {
                 System.out.println("Please provide either the MGF of mzTab parse option.");
                 printHelp(
@@ -165,7 +166,7 @@ public class ParserStarter {
 
         Option mgfOption = new Option("m", "mgf", false, "MGF parsing");
         outputOption.setArgName("mgf");
-        Option mzTabOption = new Option("z", "mztab", false, "mzTab parsing");
+        Option mzTabOption = new Option("z", "mztab", false, "mzTab parsing and merging");
         outputOption.setArgName("mztab");
         OptionGroup parsingOptionGroup = new OptionGroup();
         parsingOptionGroup.setRequired(true);
